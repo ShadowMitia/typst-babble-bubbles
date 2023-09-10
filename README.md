@@ -4,6 +4,8 @@ A package to create callouts in typst, inspired by the [Obsidan](https://obsidia
 
 Use preset callouts, or create your own!
 
+![callouts_example](examples/callouts.png)
+
 ## Usage
 
 Import the package
@@ -33,6 +35,12 @@ You can customise them with the same parameters as the `callout` function. See t
 #warning[First warning...]
 
 #note[My incredibly useful note]
+
+#question[Question?]
+
+#example[An example make things interesting]
+
+#quote[To be or not to be]
 ```
 
 ## Custom callouts
@@ -52,11 +60,13 @@ callout(
   icon: none)
 ```
 
-Tip: You can create aliases to more easily handle your
+### Tips
+
+You can create aliases to more easily handle your
 newly create callouts
 
 ```
-#let mycallout(body) = callout(title: "My callout")
+#let mycallout(body) = callout(title: "My callout", body)
 
 #mycallout[Hey this is my custom callout!]
 ```
@@ -64,7 +74,10 @@ newly create callouts
 If you want to still to pass parameters use this shorthand:
 
 ```
-#let mycallout(body, ..params) = callout(title: "My callout", ..params) // Note the added `params` arguments!
+// Note the added `params` arguments!
+#let mycallout(body, ..params) = callout(title: "My callout", body, ..params)
 
-#mycallout(title: "My title"[Hey this is my custom callout with a custom title!]
+#mycallout(title: "My title")[Hey this is my custom callout with a custom title!]
 ```
+
+You can also use the same trick from presets.

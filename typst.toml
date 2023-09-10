@@ -6,3 +6,4 @@ authors = ["Dimitri Belopopsky"]
 license = "MIT"
 description = "A package to create callouts."
 repository = "https://github.com/ShadowMitia/typst-callouts"
+exclude = [ "/examples/*"]
