@@ -1,4 +1,4 @@
-# typst-callouts
+# typst-babble-bubbles
 
 A package to create callouts in typst, inspired by the [Obsidan](https://obsidian.md/) callouts.
 
@@ -11,13 +11,13 @@ Use preset callouts, or create your own!
 Import the package
 
 ```typst
-import "@preview/callouts:0.1.0": *
+import "@preview/babble-bubbles:0.1.0": *
 ```
 
 Or grab it locally and use:
 
 ```typst
-import "@local/callouts:0.1.0": *
+import "@local/babble-bubbles:0.1.0": *
 ```
 
 ## Presets
