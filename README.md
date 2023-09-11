@@ -55,29 +55,18 @@ callout(
   body,
   title: "Callout",
   fill: blue,
-  title_color: white,
-  body_color: black,
+  title-color: white,
+  body-color: black,
   icon: none)
 ```
 
 ### Tips
 
 You can create aliases to more easily handle your
-newly create callouts
+newly create callouts or customise presets by using [with](https://typst.app/docs/reference/types/function/#methods-with).
 
 ```
-#let mycallout(body) = callout(title: "My callout", body)
+#let mycallout = callout.with(title: "My callout")
 
 #mycallout[Hey this is my custom callout!]
 ```
-
-If you want to still to pass parameters use this shorthand:
-
-```
-// Note the added `params` arguments!
-#let mycallout(body, ..params) = callout(title: "My callout", body, ..params)
-
-#mycallout(title: "My title")[Hey this is my custom callout with a custom title!]
-```
-
-You can also use the same trick from presets.
