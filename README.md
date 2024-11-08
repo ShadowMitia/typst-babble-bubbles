@@ -63,7 +63,7 @@ callout(
 ### Tips
 
 You can create aliases to more easily handle your
-newly create callouts or customise presets by using [with](https://typst.app/docs/reference/types/function/#methods-with).
+newly create callouts or customise presets by using [with](https://typst.app/docs/reference/foundations/function/#definitions-with).
 
 ```
 #let mycallout = callout.with(title: "My callout")
