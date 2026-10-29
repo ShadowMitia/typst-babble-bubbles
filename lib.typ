@@ -1,66 +1,140 @@
-// Functions
+// Style registry
+#let styles = (
+  note: (
+    title: "Note",
+    fill: rgb("151E2C"),
+    icon: "✎",
+    title-color: rgb("157AFF"),
+    body-color: white,
+  ),
+  info: (
+    title: "Info",
+    fill: rgb("151E2C"),
+    icon: "🛈",
+    title-color: rgb("157AFF"),
+    body-color: rgb("086DDD"),
+  ),
+  warning: (
+    title: "Warning",
+    fill: rgb("2A2118"),
+    icon: "⚠",
+    title-color: rgb("E9973F"),
+    body-color: white,
+  ),
+  success: (
+    title: "Success",
+    fill: rgb("19271D"),
+    icon: "✓",
+    title-color: rgb("44CF6E"),
+    body-color: white,
+  ),
+  check: (
+    title: "Check",
+    fill: rgb("19271D"),
+    icon: "✓",
+    title-color: rgb("44CF6E"),
+    body-color: white,
+  ),
+  question: (
+    title: "Question",
+    fill: rgb("29291D"),
+    icon: "?",
+    title-color: rgb("E0DE71"),
+    body-color: white,
+  ),
+  fail: (
+    title: "Failed",
+    fill: rgb("2C191A"),
+    icon: "𐄂",
+    title-color: rgb("AF3438"),
+    body-color: white,
+  ),
+  example: (
+    title: "Example",
+    fill: rgb("194F1D"),
+    icon: "🕮",
+    title-color: rgb("44D96E"),
+    body-color: white,
+  ),
+  examples: (
+    title: "Examples",
+    fill: rgb("194F1D"),
+    icon: "🕮",
+    title-color: rgb("44D96E"),
+    body-color: white,
+  ),
+  quote: (
+    title: "Quote",
+    fill: rgb("222222"),
+    icon: "❞",
+    title-color: rgb("9E9E9E"),
+    body-color: white,
+  ),
+)
 
-#let callout(body, title: "Callout", fill: blue, title-color: white, body-color: black, icon: none) = {
-  block(fill: fill,
-	   width: 100%,
-	   inset: 8pt)[
-	  = #text(title-color)[#icon #title]
-	  #text(body-color)[
-		  #body
-		  ]
-	]
+// Helpers
+#let coalesce(args) = {
+  for arg in args {
+    if arg != none {
+      return arg
+    }
+  }
+  none
 }
 
-// Presets
+// Core function
 
-#let note = callout.with(title: "Note",
-			fill: rgb(21, 30, 44),
-			icon: "✎",
-			title-color: rgb(21, 122, 255),
-			body-color: white)
+#let callout(
+  body,
+  kind: none,
+  title: none,
+  fill: none,
+  title-color: none,
+  body-color: none,
+  icon: none,
+  radius: 4pt,
+  stroke: none,
+  width: 100%,
+) = {
+  let s = if kind != none {
+    if not styles.keys().contains(kind) {
+      panic("Unknown callout kind: " + kind + ". Available: " + styles.keys().join(", "))
+    }
+    styles.at(kind)
+  } else {
+    (:)
+  }
 
-#let info = callout.with(title: "Info",
-		   fill: rgb(21, 30, 44),
-								   icon: "🛈",
-								   title-color: rgb(21, 122, 255),
-								   body-color: rgb(8, 109, 221))
+  let _title = coalesce((title, s.at("title", default: none), kind))
+  let _fill = coalesce((fill, s.at("fill", default: none), blue))
+  let _icon = coalesce((icon, s.at("icon", default: none)))
+  let _title-color = coalesce((title-color, s.at("title-color", default: none), white))
+  let _body-color = coalesce((body-color, s.at("body-color", default: none), black))
+  let _width = coalesce((width, s.at("width", default: none), 100%))
 
-#let warning = callout.with(title: "Warning",
-		   fill: rgb(42, 33, 24),
-									  icon: "⚠",
-									  title-color: rgb(233, 151, 63),
-									  body-color: white)
+  block(
+    fill: _fill,
+    inset: (x: 12pt, y: 10pt),
+    width: _width,
+    radius: radius,
+    stroke: stroke,
+    breakable: false,
+  )[
+    #text(fill: _title-color, weight: "bold")[#_icon #_title]
+    #v(4pt)
+    #text(fill: _body-color)[#body]
+  ]
+}
 
-#let success = callout.with(title: "Success",
-		   fill: rgb(25, 39, 29),
-									  title-color: rgb(68, 207, 110),
-									  icon: "✓",
-									  body-color: white)
+// Convenience wrappers
 
-#let check = success.with(title: "Check")
-
-#let question = callout.with(title: "Question",
-		   fill: rgb(41, 41, 29),
-									  title-color: rgb(224, 222, 113),
-									  icon: "?",
-									  body-color: white)
-
-#let fail = callout.with(title: "Failed",
-		   fill: rgb(44, 25, 26),
-									  title-color: rgb(175, 52, 56),
-									  icon: "𐄂",
-									  body-color: white)
-
-#let example = callout.with(title: "Example",
-		   fill: rgb(25, 79, 29),
-									  title-color: rgb(68, 217, 110),
-									  icon: "🕮",
-									  body-color: white)
-
-#let examples = example.with(title: "Examples")
-
-#let quote = callout.with(title: "Quote",
-		   fill: rgb(34, 34, 34),
-									  title-color: rgb(158, 158, 158),
-									  icon: "❞",
-									  body-color: white)
+#let note = callout.with(kind: "note")
+#let info = callout.with(kind: "info")
+#let warning = callout.with(kind: "warning")
+#let success = callout.with(kind: "success")
+#let check = callout.with(kind: "check")
+#let question = callout.with(kind: "question")
+#let fail = callout.with(kind: "fail")
+#let example = callout.with(kind: "example")
+#let examples = callout.with(kind: "examples")
+#let quote = callout.with(kind: "quote")
