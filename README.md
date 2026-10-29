@@ -11,13 +11,13 @@ Use preset callouts, or create your own!
 Import the package
 
 ```typst
-#import "@preview/babble-bubbles:0.1.0": *
+#import "@preview/babble-bubbles:0.2.0": *
 ```
 
 Or grab it locally and use:
 
 ```typst
-#import "@local/babble-bubbles:0.1.0": *
+#import "@local/babble-bubbles:0.2.0": *
 ```
 
 ## Presets
@@ -43,6 +43,8 @@ You can customise them with the same parameters as the `callout` function. See t
 #quote[To be or not to be]
 ```
 
+See more in [examples](examples/examples.typ)
+
 ## Custom callouts
 
 ### `callout`
@@ -52,12 +54,17 @@ Tweak the parameters to create your own!
 
 ```typst
 callout(
-  body,
-  title: "Callout",
-  fill: blue,
-  title-color: white,
-  body-color: black,
-  icon: none)
+    body,
+    kind: none,
+    title: none,
+    fill: none,
+    title-color: none,
+    body-color: none,
+    icon: none,
+    radius: 4pt,
+    stroke: none,
+    width: 100%,
+)
 ```
 
 ### Tips
@@ -70,3 +77,5 @@ newly create callouts or customise presets by using [with](https://typst.app/doc
 
 #mycallout[Hey this is my custom callout!]
 ```
+
+See more in [examples](examples/examples.typ)
